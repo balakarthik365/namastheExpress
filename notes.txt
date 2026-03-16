@@ -1,0 +1,27 @@
+16-03-2026
+create a project using npm init
+package.json file is created
+create src folder where we can create node js pages and main js file which has all other js code.
+install expressjs - npm i express
+Node modules folder is created which has  all the dependencies available to run express application.
+package-lock.json is created which has all the current dependencies with current versions.
+"express": "^5.2.1"  - 
+5 is major version(any change that break the existing feature can be known as major, can break application), 
+2 is the minor(any new features pushed in future, and backward compatible) version and 
+1 is the patch(any change like bug fix that can be known as patch).
+caret ^ - automatically updated if any minor or patch change.
+tilde ~ - automatically updated if any patch change.
+install nodemon that will restart server when any changes are made.
+to create a server
+1. import express using the commonjs or es modules
+    const express = require("express");
+2. create an app that listen to the project
+    const app = express();
+    app.listen(3000, ()=>{ 
+        console.log("App is running")
+    })//will take two parameters one is port number and other is callback function to show app status.
+3. .use is used to create requests and response for the server.
+    app.use((req, res)=>{
+        res.send("The app is running on server")
+    })
+4. Update script with "dev" nodemon src/app.js
