@@ -28,7 +28,7 @@ to create a server
 ---------------------------------------------------------------------------
 17-03-2026
 In routing the order of defining routes is important. because the path is checked and matched line by line.
-ex: app.use("/hello", (req, res) => {
+ex: app.use("/hello", (req, res) => {//the callback is known as route handler
     res.send("hello");
     });
     app.use("/hello/2", (req, res) => {
@@ -85,4 +85,15 @@ use the req.query to read query parameters
 use the user/:userId to pass anything after API endpoint
 use req.param to get parameter
 : means dynamic routes
+
+Make sure to send response from the server for sure. if not the call fails after being into infinite response checking loop
+
+Routing and Middle ware
+If the API has more than one routing handler we will get response for only first response. if there is no response from first handler the API will be in infinite loop and dont go to next handler.
+to overcome this we need to use next() function to see the next response. 
+if first handler sends response the next handler code is read and throws error because the TCP connectino was already made and response sent by first handler.
+next() alwasy calls the next function.
+if there is no reponse send with in multiple route handlers and next() is used then we see the API repsonse as cannot find user. if no next in final route handler then it will be infinite loop.
+we can also add multiple routes with array[]
+
 
