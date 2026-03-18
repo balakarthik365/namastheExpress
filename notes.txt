@@ -94,6 +94,12 @@ to overcome this we need to use next() function to see the next response.
 if first handler sends response the next handler code is read and throws error because the TCP connectino was already made and response sent by first handler.
 next() alwasy calls the next function.
 if there is no reponse send with in multiple route handlers and next() is used then we see the API repsonse as cannot find user. if no next in final route handler then it will be infinite loop.
-we can also add multiple routes with array[]
+we can also add multiple routes with array[]    
 
+Middle ware - 
+The functions used in the HTTP call is called middle ware.
+In an api call there can be number of middlewares but the request handler that sends the response will be executed and response send.
 
+Diff b/w app.use and app.all
+
+In general middle ware can be used with app.use() to check authorization before any api is called related to the particular requests.
