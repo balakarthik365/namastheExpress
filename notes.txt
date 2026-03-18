@@ -50,3 +50,39 @@ get - when we run an api in browser it will by default makes GET api call.
 post - we have to write explicit code to make POST api call.
 
 To test the API, we should always use postman.
+------------------------------------------------------------------
+18-03-2026
+if, 
+app.delete("/ab?c", (req, res) => {
+  res.send("Data deleted from data base");
+});
+the API works with the end point if it is abc or ac.
+
+if, 
+app.delete("/ab+c", (req, res) => {
+  res.send("Data deleted from data base");
+});
+the API works with the end point if it is abc or abbbbbbbc or abbc.
+works when API endpoint starts with ab and ends with c
+
+if, 
+app.delete("/ab*cd", (req, res) => {
+  res.send("Data deleted from data base");
+});
+the API works with the end point if it is abcd or abasfasfasfsdfksdfgsdfkdasgcd.
+works when API endpoint starts with ab and ends with cd
+
+
+if, 
+app.delete("/a(bc)?d", (req, res) => {
+  res.send("Data deleted from data base");
+});
+In this API the bc is optional.
+We can also use regex for path.
+
+use the req.query to read query parameters
+
+use the user/:userId to pass anything after API endpoint
+use req.param to get parameter
+: means dynamic routes
+
