@@ -103,3 +103,98 @@ In an api call there can be number of middlewares but the request handler that s
 Diff b/w app.use and app.all
 
 In general middle ware can be used with app.use() to check authorization before any api is called related to the particular requests.
+
+To handle the errors in Express we have to use err as first parameter in the API.
+app.use("/",(err, req, res, next)=>{ //this order matters alot
+if(err){
+    res.status("500").send("Something went wrong")
+}
+})
+
+always use try and catch block to handle errors
+app.get("/user/getUser", (req, res) => {
+  try {
+    throw new Error("error");
+    console.log("Into the users page.");
+    res.send("Welcome User!!");
+  } catch (err) {
+    if (err) {
+      res.status(500).send("Something went wrong with in getUser");
+    }
+  }
+});
+------------------------------------------------------------------
+23-03-2026
+connect to DB using mongoose.
+
+To work with DB we have to install mongoose from npm.
+Once the mongoose is installed. create a connection using the cluster URL.
+To connect -> import/require mongoose
+              then, connect mongoose using the async await function and call the function.
+While adding the cluster URL be aware to add the document/DB names other wise the payload that is sent will refer to whole cluster
+const mongoose = require("mongoose");
+const connectDB = async () => {
+  //devTinder is the DB/Document name inside the cluster
+  await mongoose.connect(
+    "mongodb+srv://namastheDB:Advaith%40%240526@namasthenode.uapxy5m.mongodb.net/devTinder",
+  );
+};
+connectDB()
+  .then(() => {
+    console.log("Connected to DB...!");
+  })
+  .catch((err) => {
+    console.log(err, "error in connecting to DB");
+  });
+Now, we can import the database.js file to other files to read, write and manipulate data.
+
+The best way to connect to DB before the server runs on port. create the cluster connection in database.js
+Now, Import the database.js function and create an connection here using the promise and then host your server after connecting to the DB.
+database.js
+-----------
+const mongoose = require("mongoose");
+const connectDB = async () => {
+  await mongoose.connect(
+    "mongodb+srv://namastheDB:Advaith%40%240526@namasthenode.uapxy5m.mongodb.net/",
+  );
+};
+module.exports = connectDB;
+
+app.js
+------
+const express = require("express");
+const connectDB = require("./config/database");
+const app = express();
+connectDB()
+  .then(() => {
+    console.log("Connected to DB...!");
+    app.listen(3000, () => {
+      console.log("server is running on port 3000");
+    });
+  })
+  .catch((err) => {
+    console.log(err, "error in connecting to DB");
+  });
+Note: start your server only once the DB connected successfully.
+
+
+Schema: Schema is basically an identity for the collection of the document.
+use camleCase naming convention while defining the Schema
+now, for user schema it can have firstName, .....
+define the type = string/number ......
+create a model and this model starts with capital letter(says it is a Model) and then export the model.
+
+
+devTinder is the DB
+users is the collection
+
+So, basically if you want to create a server to save the data.
+first, create a DB using the mongoose library and connect to the database.
+now, in the file where you want to use this data base import the database and connect it using the promise
+once promise is resolved only then make the server listen to the port
+later, create a user schema and then create an object that needs to match this schema to send the post request using the server to the DB
+in the file where we have connected DB, use app.post method to send schema data and schema.save to save data and response.send to log the response.
+
+
+_id & __v are given by mongoose are created by mongoose it self.
+__v - is version that is maintained by mongoDB to show the udpated versions.
