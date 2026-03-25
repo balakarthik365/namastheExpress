@@ -50,6 +50,70 @@ app.post("/signup", async (req, res) => {
     res.status(400).send(errResp);
   }
 });
+//get user by email id
+app.get("/userByEmail", async (req, res) => {
+  try {
+    const users = await User.find({ email: req.body.email });
+    if (users.length === 0) {
+      res.status(400).send("User not found");
+    } else {
+      res.send(users);
+    }
+  } catch (err) {
+    res
+      .status(400)
+      .send("Something went wrong!! Please connect to Server Administrator");
+  }
+});
+
+//find use by id
+app.get("/userById", async (req, res) => {
+  try {
+    const users = await User.find({ _id: req.body.id });
+    if (users.length === 0) {
+      res.status(400).send("User not found");
+    } else {
+      res.send(users);
+    }
+  } catch (err) {
+    res
+      .status(400)
+      .send("Something went wrong!! Please connect to Server Administrator");
+  }
+});
+//Feed API to fetch users
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    if (users.length === 0) {
+      res.status(400).send("User not found");
+    } else {
+      res.send(users);
+    }
+  } catch (err) {
+    res
+      .status(400)
+      .send("Something went wrong!! Please connect to Server Administrator");
+  }
+});
+
+// Delete user by ID
+app.delete("/users/:id", async (req, res) => {
+  try {
+    const deletedUser = await User.findOneAndDelete({ _id: req.params.id });
+
+    if (!deletedUser) {
+      return res.status(404).send("User not found with the provided ID.");
+    }
+
+    res.send({ message: "User deleted successfully", user: deletedUser });
+  } catch (err) {
+    // Handle CastError for invalid ObjectId format
+    if (err.name === "CastError" && err.path === "_id") {
+      return res.status(400).send("Invalid User ID format.");
+    }
+  }
+});
 connectDB()
   .then(() => {
     console.log("Connected to DB...!");
