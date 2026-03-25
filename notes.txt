@@ -198,3 +198,8 @@ in the file where we have connected DB, use app.post method to send schema data 
 
 _id & __v are given by mongoose are created by mongoose it self.
 __v - is version that is maintained by mongoDB to show the udpated versions.
+---------------------------------------------------------------
+25-03-2026
+To make the request  dynamic, add the request body in post man and receive it in the app.
+once received it send back the data as payload to the API using post.
+Note : The JS object are differed from JSON so use the express.json() application as a middle ware for the request body conversion
